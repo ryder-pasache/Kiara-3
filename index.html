@@ -9,7 +9,67 @@
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #fce4ec;
+      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+      overflow: hidden;
+    }
+    .decor-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .float-emoji {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      opacity: 0.7;
+      animation: floatEmojis 8s linear infinite;
+      will-change: transform, opacity;
+    }
+    @keyframes floatEmojis {
+      0% {
+        transform: translateY(100vh) scale(0.7) rotate(-10deg);
+        opacity: 0.7;
+      }
+      80% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.1) rotate(10deg);
+        opacity: 0;
+      }
+    }
+    .tulips {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 120px;
+      z-index: 1;
+      pointer-events: none;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 10vw;
+    }
+    .tulip {
+      width: 38px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      opacity: 0.92;
+      animation: swayTulip 3s ease-in-out infinite alternate;
+    }
+    .tulip:nth-child(2n) { animation-delay: 1s; }
+    .tulip:nth-child(3n) { animation-delay: 2s; }
+    @keyframes swayTulip {
+      0% { transform: translateY(0) rotate(-2deg); }
+      100% { transform: translateY(-8px) rotate(3deg); }
     }
     .screen {
       display: none;
@@ -58,13 +118,45 @@
       text-align: left;
       font-family: 'Comic Sans MS', cursive, sans-serif;
       line-height: 1.6;
+      box-shadow: 0 8px 32px 0 rgba(248,187,208,0.25);
+      position: relative;
+      z-index: 2;
     }
     .notepad h3 {
       margin-top: 0;
     }
+    .typewriter {
+      display: inline-block;
+      border-right: 2px solid #f06292;
+      white-space: pre-wrap;
+      animation: blink-caret 0.8s step-end infinite;
+      min-height: 120px;
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: #f06292; }
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 18px;
+      background: #f8bbd0;
+      color: #ad1457;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .back-btn:hover {
+      background: #f06292;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
+<div class="decor-bg" id="decorBg"></div>
+<div class="tulips" id="tulips"></div>
 <div id="passwordScreen" class="screen password-screen active">
   <h2> Enter password</h2>
   <div class="input-display" id="inputDisplay">••••</div>
@@ -87,18 +179,8 @@
   <div class="notepad">
     <h3> 1 Julio 2025 </h3>
     <h4> Para mi gran amor, Kiara </h4>
-    <p>
-      Desde que llegaste a mi vida, todo tiene más color y sentido. Eres la luz que ilumina mis días y la calma que abraza mis noches.
-    </p>
-    <p>
-      Me enamora tu risa, tu dulzura y la forma en que haces que todo sea especial. Gracias por enseñarme lo que es el amor verdadero, tu ternura y por cada momento compartido.
-    </p>
-    <p>
-      No hay palabras suficientes para decirte cuánto te amo. Eres mi sueño hecho realidad, mi compañera, mi mejor amiga y el amor de mi vida.
-    </p>
-    <p>
-      Prometo cuidarte, apoyarte y amarte cada día más. Gracias por ser tú, por elegirme y por hacerme tan feliz. Te amo con todo mi corazón, Kiara. 💖
-    </p>
+    <div id="typewriter" class="typewriter"></div>
+    <button class="back-btn" onclick="goBack()">Volver</button>
   </div>
 </div>
 <script>
@@ -114,6 +196,7 @@
       if (input === correctPassword) {
         document.getElementById('passwordScreen').classList.remove('active');
         document.getElementById('notepadScreen').classList.add('active');
+        startTypewriter();
       } else {
         alert('Contraseña incorecta, intenta de nuevo');
         input = '';
@@ -121,6 +204,90 @@
       }
     }
   }
+
+  function goBack() {
+    document.getElementById('notepadScreen').classList.remove('active');
+    document.getElementById('passwordScreen').classList.add('active');
+    input = '';
+    document.getElementById('inputDisplay').textContent = '••••';
+    document.getElementById('typewriter').textContent = '';
+  }
+
+  // Efecto máquina de escribir
+  const carta = `Desde que llegaste a mi vida, todo tiene más color y sentido. Eres la luz que ilumina mis días y la calma que abraza mis noches.\n\nMe enamora tu risa, tu dulzura y la forma en que haces que todo sea especial. Gracias por enseñarme lo que es el amor verdadero, tu ternura y por cada momento compartido.\n\nNo hay palabras suficientes para decirte cuánto te amo. Eres mi sueño hecho realidad, mi compañera, mi mejor amiga y el amor de mi vida.\n\nPrometo cuidarte, apoyarte y amarte cada día más. Gracias por ser tú, por elegirme y por hacerme tan feliz. Te amo con todo mi corazón, Kiara. 💖`;
+  let twIndex = 0;
+  function startTypewriter() {
+    const tw = document.getElementById('typewriter');
+    tw.textContent = '';
+    twIndex = 0;
+    typeWriterStep();
+  }
+  function typeWriterStep() {
+    const tw = document.getElementById('typewriter');
+    if (twIndex < carta.length) {
+      tw.textContent += carta[twIndex] === '\\n' ? '\n' : carta[twIndex];
+      twIndex++;
+      setTimeout(typeWriterStep, carta[twIndex-1] === '.' ? 80 : 32);
+    }
+  }
+
+  // Emojis flotantes: corazones y lunas
+  function createFloatingEmojis() {
+    const decorBg = document.getElementById('decorBg');
+    const emojis = [
+      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f496.png', // corazón
+      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f319.png', // luna creciente
+      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f31a.png', // luna con cara
+      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f495.png'  // corazones girando
+    ];
+    for (let i = 0; i < 20; i++) {
+      const emojiDiv = document.createElement('div');
+      emojiDiv.className = 'float-emoji';
+      const emojiUrl = emojis[Math.floor(Math.random() * emojis.length)];
+      emojiDiv.style.background = `url('${emojiUrl}') no-repeat center/contain`;
+      emojiDiv.style.left = Math.random() * 100 + 'vw';
+      emojiDiv.style.animationDelay = (Math.random() * 8) + 's';
+      emojiDiv.style.animationDuration = (6 + Math.random() * 4) + 's';
+      emojiDiv.style.opacity = 0.5 + Math.random() * 0.5;
+      decorBg.appendChild(emojiDiv);
+    }
+  }
+  // Tulipanes en la parte inferior
+  function createTulips() {
+    const tulips = document.getElementById('tulips');
+    // SVGs de tulipanes de diferentes colores
+    const tulipSVGs = [
+      `<svg width="38" height="120" viewBox="0 0 38 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="17" y="40" width="4" height="70" rx="2" fill="#388e3c"/>
+        <ellipse cx="19" cy="48" rx="13" ry="18" fill="#f06292"/>
+        <ellipse cx="19" cy="44" rx="8" ry="10" fill="#fff" fill-opacity=".18"/>
+      </svg>`,
+      `<svg width="38" height="120" viewBox="0 0 38 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="17" y="40" width="4" height="70" rx="2" fill="#388e3c"/>
+        <ellipse cx="19" cy="48" rx="13" ry="18" fill="#ffd54f"/>
+        <ellipse cx="19" cy="44" rx="8" ry="10" fill="#fff" fill-opacity=".18"/>
+      </svg>`,
+      `<svg width="38" height="120" viewBox="0 0 38 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="17" y="40" width="4" height="70" rx="2" fill="#388e3c"/>
+        <ellipse cx="19" cy="48" rx="13" ry="18" fill="#ba68c8"/>
+        <ellipse cx="19" cy="44" rx="8" ry="10" fill="#fff" fill-opacity=".18"/>
+      </svg>`,
+      `<svg width="38" height="120" viewBox="0 0 38 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="17" y="40" width="4" height="70" rx="2" fill="#388e3c"/>
+        <ellipse cx="19" cy="48" rx="13" ry="18" fill="#e57373"/>
+        <ellipse cx="19" cy="44" rx="8" ry="10" fill="#fff" fill-opacity=".18"/>
+      </svg>`
+    ];
+    for (let i = 0; i < 8; i++) {
+      const tulip = document.createElement('div');
+      tulip.className = 'tulip';
+      tulip.innerHTML = tulipSVGs[i % tulipSVGs.length];
+      tulip.style.marginLeft = (i === 0 ? 0 : Math.random() * 16 + 8) + 'px';
+      tulips.appendChild(tulip);
+    }
+  }
+  createFloatingEmojis();
+  createTulips();
 </script>
 </body>
 </html>
