@@ -1,293 +1,244 @@
-<!DOCTYPE html> 
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Carta Secreta Para el Amor de mi Vida</title>
+  <title>Magia de nuestro amor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      min-height: 100vh;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(120deg, #f8bbd0 0%, #fff0f6 100%);
       overflow: hidden;
     }
-    .decor-bg {
+    .particles {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none;
       z-index: 0;
     }
-    .float-emoji {
-      position: absolute;
-      width: 36px;
-      height: 36px;
-      opacity: 0.7;
-      animation: floatEmojis 8s linear infinite;
-      will-change: transform, opacity;
-    }
-    @keyframes floatEmojis {
-      0% {
-        transform: translateY(100vh) scale(0.7) rotate(-10deg);
-        opacity: 0.7;
-      }
-      80% {
-        opacity: 0.9;
-      }
-      100% {
-        transform: translateY(-10vh) scale(1.1) rotate(10deg);
-        opacity: 0;
-      }
-    }
-    .tulips {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100vw;
-      height: 120px;
-      z-index: 1;
-      pointer-events: none;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      padding: 0 10vw;
-    }
-    .tulip {
-      width: 38px;
-      height: 120px;
+    .magic-container {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-end;
-      opacity: 0.92;
-      animation: swayTulip 3s ease-in-out infinite alternate;
-    }
-    .tulip:nth-child(2n) { animation-delay: 1s; }
-    .tulip:nth-child(3n) { animation-delay: 2s; }
-    @keyframes swayTulip {
-      0% { transform: translateY(0) rotate(-2deg); }
-      100% { transform: translateY(-8px) rotate(3deg); }
-    }
-    .screen {
-      display: none;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-    .active {
-      display: flex;
-    }
-    .password-screen {
-      flex-direction: column;
-    }
-    .keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 60px);
-      gap: 10px;
-      margin-top: 20px;
-      justify-content: center;
-    }
-    .key {
-      background-color: #f8bbd0;
-      border: none;
-      border-radius: 10px;
-      font-size: 20px;
-      padding: 15px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .key:hover {
-      background-color: #f48fb1;
-    }
-    .input-display {
-      font-size: 24px;
-      margin-top: 20px;
-      letter-spacing: 8px;
-    }
-    .notepad {
-      background-color: #fff0f6;
-      border: 3px solid #f8bbd0;
-      padding: 20px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 500px;
-      text-align: left;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      line-height: 1.6;
-      box-shadow: 0 8px 32px 0 rgba(248,187,208,0.25);
       position: relative;
       z-index: 2;
     }
-    .notepad h3 {
-      margin-top: 0;
+    .magic-card {
+      background: rgba(255,255,255,0.97);
+      border-radius: 36px;
+      box-shadow: 0 8px 40px 0 rgba(248,187,208,0.25), 0 0 0 6px #f8bbd0;
+      padding: 44px 32px 36px 32px;
+      max-width: 480px;
+      width: 95vw;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 1.2s;
     }
-    .typewriter {
-      display: inline-block;
-      border-right: 2px solid #f06292;
-      white-space: pre-wrap;
-      animation: blink-caret 0.8s step-end infinite;
-      min-height: 120px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes blink-caret {
-      from, to { border-color: transparent; }
-      50% { border-color: #f06292; }
+    .magic-photo {
+      width: 240px;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 8px solid #fff0f6;
+      box-shadow: 0 0 0 8px #f8bbd0, 0 4px 32px 0 rgba(248,187,208,0.18);
+      margin-bottom: 22px;
+      background: #fff0f6;
+      animation: glow 2.5s infinite;
+      transition: width 0.3s, height 0.3s;
     }
-    .back-btn {
-      display: inline-block;
-      margin-top: 18px;
-      background: #f8bbd0;
+    @keyframes glow {
+      0% { box-shadow: 0 0 0 8px #f8bbd0, 0 4px 32px 0 rgba(248,187,208,0.18); }
+      50% { box-shadow: 0 0 0 16px #f8bbd0, 0 4px 48px 0 rgba(248,187,208,0.32); }
+      100% { box-shadow: 0 0 0 8px #f8bbd0, 0 4px 32px 0 rgba(248,187,208,0.18); }
+    }
+    .magic-title {
+      font-family: 'Pacifico', cursive, 'Segoe Script', sans-serif;
       color: #ad1457;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 22px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.2s;
+      font-size: 2.3rem;
+      margin-bottom: 8px;
+      margin-top: 0;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #fff0f6;
     }
-    .back-btn:hover {
-      background: #f06292;
+    .magic-sub {
+      color: #6d214f;
+      font-size: 1.15rem;
+      margin-top: 0;
+      margin-bottom: 22px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .magic-text {
+      color: #4a235a;
+      font-size: 1.13rem;
+      line-height: 1.8;
+      margin-bottom: 22px;
+      white-space: pre-line;
+      text-align: left;
+      background: rgba(255,255,255,0.8);
+      border-radius: 18px;
+      padding: 22px 18px;
+      box-shadow: 0 2px 16px 0 rgba(248,187,208,0.10);
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .firma {
+      color: #ad1457;
+      font-family: 'Pacifico', cursive, 'Segoe Script', sans-serif;
+      font-size: 1.15rem;
+      margin-top: 18px;
+      margin-bottom: 0;
+      text-align: right;
+    }
+    .magic-btn {
+      margin-top: 28px;
+      background: linear-gradient(90deg, #f8bbd0 0%, #f06292 100%);
       color: #fff;
+      border: none;
+      border-radius: 24px;
+      padding: 14px 38px;
+      font-size: 1.1rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 12px 0 rgba(248,187,208,0.18);
+      transition: background 0.2s, transform 0.2s;
+      animation: btnPop 1.2s;
+    }
+    .magic-btn:hover {
+      background: linear-gradient(90deg, #f06292 0%, #f8bbd0 100%);
+      transform: scale(1.06);
+    }
+    @keyframes btnPop {
+      0% { transform: scale(0.7); opacity: 0; }
+      80% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @media (max-width: 700px) {
+      .magic-card { padding: 18px 2vw 18px 2vw; }
+      .magic-photo { width: 120px; height: 120px; }
     }
   </style>
 </head>
 <body>
-<div class="decor-bg" id="decorBg"></div>
-<div class="tulips" id="tulips"></div>
-<div id="passwordScreen" class="screen password-screen active">
-  <h2> Enter password</h2>
-  <div class="input-display" id="inputDisplay">••••</div>
-  <div class="keypad">
-    <button class="key" onclick="enterDigit('1')">1</button>
-    <button class="key" onclick="enterDigit('2')">2</button>
-    <button class="key" onclick="enterDigit('3')">3</button>
-    <button class="key" onclick="enterDigit('4')">4</button>
-    <button class="key" onclick="enterDigit('5')">5</button>
-    <button class="key" onclick="enterDigit('6')">6</button>
-    <button class="key" onclick="enterDigit('7')">7</button>
-    <button class="key" onclick="enterDigit('9')">9</button>
-    <button class="key" onclick="enterDigit('8')">8</button>
-    <div></div>
-    <button class="key" onclick="enterDigit('0')">0</button>
-    <div></div>
+  <canvas class="particles" id="particles"></canvas>
+  <div class="magic-container">
+    <div class="magic-card">
+      <img class="magic-photo" src="Imagen de WhatsApp 2025-07-04 a las 04.24.36_b7dcd8f0.jpg" alt="Foto de Kiara" id="fotoKiara" />
+      <h1 class="magic-title">Kiara, eres mi magia</h1>
+      <h2 class="magic-sub">Nuestro amor es un milagro, y quiero vivirlo contigo</h2>
+      <div id="cartaSobre" style="display:block;">
+        <div style="background:linear-gradient(120deg,#f8bbd0 0%,#fff0f6 100%);border-radius:24px;padding:32px 18px;box-shadow:0 2px 24px 0 rgba(248,187,208,0.18);color:#ad1457;font-size:1.25rem;line-height:1.7;white-space:pre-line;text-align:center;animation:fadeIn 1.2s;position:relative;">
+          <span style="font-family:'Pacifico',cursive;font-size:2rem;">Para Kiara 💌</span>
+          <div style="margin-top:18px;">Haz clic en el sobre para abrir tu carta especial</div>
+          <button class="magic-btn" style="margin-top:28px;" onclick="abrirCarta()">Abrir carta</button>
+        </div>
+      </div>
+      <div id="cartaDinamica" style="display:none; margin-top:0;">
+        <div class="magic-text" id="typewriterCarta"></div>
+        <div class="firma">Con todo mi amor,<br>Tu Rómulo</div>
+      </div>
+    </div>
   </div>
-</div>
-<div id="notepadScreen" class="screen">
-  <div class="notepad">
-    <h3> 1 Julio 2025 </h3>
-    <h4> Para mi gran amor, Kiara </h4>
-    <div id="typewriter" class="typewriter"></div>
-    <button class="back-btn" onclick="goBack()">Volver</button>
-  </div>
-</div>
-<script>
-  const correctPassword = '2006';
-  let input = '';
-  function enterDigit(digit) {
-    if (input.length < 4) {
-      input += digit;
+  <script>
+    // Partículas de corazones y destellos
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let w = window.innerWidth, h = window.innerHeight;
+    canvas.width = w; canvas.height = h;
+    window.addEventListener('resize', () => {
+      w = window.innerWidth; h = window.innerHeight;
+      canvas.width = w; canvas.height = h;
+    });
+    function randomColor() {
+      const colors = ['#f06292', '#f8bbd0', '#fff0f6', '#ffd1dc', '#fff'];
+      return colors[Math.floor(Math.random()*colors.length)];
     }
-    const display = document.getElementById('inputDisplay');
-    display.textContent = input.padEnd(4, '•');
-    if (input.length === 4) {
-      if (input === correctPassword) {
-        document.getElementById('passwordScreen').classList.remove('active');
-        document.getElementById('notepadScreen').classList.add('active');
-        startTypewriter();
-      } else {
-        alert('Contraseña incorecta, intenta de nuevo');
-        input = '';
-        display.textContent = '••••';
+    function drawHeart(x, y, size, color, alpha=1) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.moveTo(x, y+size/4);
+      ctx.bezierCurveTo(x, y, x-size/2, y, x-size/2, y+size/4);
+      ctx.bezierCurveTo(x-size/2, y+size/2, x, y+size*0.8, x, y+size);
+      ctx.bezierCurveTo(x, y+size*0.8, x+size/2, y+size/2, x+size/2, y+size/4);
+      ctx.bezierCurveTo(x+size/2, y, x, y, x, y+size/4);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.restore();
+    }
+    function drawSparkle(x, y, size, color, alpha=1) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.arc(x, y, size/2, 0, 2*Math.PI);
+      ctx.fillStyle = color;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.restore();
+    }
+    const particles = [];
+    for(let i=0;i<32;i++){
+      particles.push({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        size: 16+Math.random()*18,
+        speed: 0.3+Math.random()*0.5,
+        color: randomColor(),
+        type: Math.random()>0.7?'sparkle':'heart',
+        alpha: 0.5+Math.random()*0.5
+      });
+    }
+    function animateParticles(){
+      ctx.clearRect(0,0,w,h);
+      for(const p of particles){
+        if(p.type==='heart') drawHeart(p.x,p.y,p.size,p.color,p.alpha);
+        else drawSparkle(p.x,p.y,p.size,p.color,p.alpha);
+        p.y += p.speed;
+        if(p.y > h+40){
+          p.y = -40; p.x = Math.random()*w; p.color = randomColor();
+        }
       }
+      requestAnimationFrame(animateParticles);
     }
-  }
+    animateParticles();
+    // Cambia la foto si lo deseas:
+    // document.getElementById('fotoKiara').src = 'NOMBRE_DE_TU_FOTO.jpg';
 
-  function goBack() {
-    document.getElementById('notepadScreen').classList.remove('active');
-    document.getElementById('passwordScreen').classList.add('active');
-    input = '';
-    document.getElementById('inputDisplay').textContent = '••••';
-    document.getElementById('typewriter').textContent = '';
-  }
-
-  // Efecto máquina de escribir
-  const carta = `Desde que llegaste a mi vida, todo tiene más color y sentido. Eres la luz que ilumina mis días y la calma que abraza mis noches.\n\nMe enamora tu risa, tu dulzura y la forma en que haces que todo sea especial. Gracias por enseñarme lo que es el amor verdadero, tu ternura y por cada momento compartido.\n\nNo hay palabras suficientes para decirte cuánto te amo. Eres mi sueño hecho realidad, mi compañera, mi mejor amiga y el amor de mi vida.\n\nPrometo cuidarte, apoyarte y amarte cada día más. Gracias por ser tú, por elegirme y por hacerme tan feliz. Te amo con todo mi corazón, Kiara. 💖`;
-  let twIndex = 0;
-  function startTypewriter() {
-    const tw = document.getElementById('typewriter');
-    tw.textContent = '';
-    twIndex = 0;
-    typeWriterStep();
-  }
-  function typeWriterStep() {
-    const tw = document.getElementById('typewriter');
-    if (twIndex < carta.length) {
-      tw.textContent += carta[twIndex] === '\\n' ? '\n' : carta[twIndex];
-      twIndex++;
-      setTimeout(typeWriterStep, carta[twIndex-1] === '.' ? 80 : 32);
+    // Carta dinámica con efecto máquina de escribir
+    function abrirCarta() {
+      document.getElementById('cartaSobre').style.display = 'none';
+      var carta = document.getElementById('cartaDinamica');
+      carta.style.display = 'block';
+      carta.scrollIntoView({behavior:'smooth', block:'center'});
+      typewriterCarta();
     }
-  }
-
-  // Emojis flotantes: corazones y lunas
-  function createFloatingEmojis() {
-    const decorBg = document.getElementById('decorBg');
-    const emojis = [
-      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f496.png', // corazón
-      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f319.png', // luna creciente
-      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f31a.png', // luna con cara
-      'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f495.png'  // corazones girando
-    ];
-    for (let i = 0; i < 20; i++) {
-      const emojiDiv = document.createElement('div');
-      emojiDiv.className = 'float-emoji';
-      const emojiUrl = emojis[Math.floor(Math.random() * emojis.length)];
-      emojiDiv.style.background = `url('${emojiUrl}') no-repeat center/contain`;
-      emojiDiv.style.left = Math.random() * 100 + 'vw';
-      emojiDiv.style.animationDelay = (Math.random() * 8) + 's';
-      emojiDiv.style.animationDuration = (6 + Math.random() * 4) + 's';
-      emojiDiv.style.opacity = 0.5 + Math.random() * 0.5;
-      decorBg.appendChild(emojiDiv);
+    const textoCarta = `Querida Kiara:\n\nEres el amor de mi vida. No hay palabras suficientes para expresar lo que siento por ti. Eres la persona que ilumina mis días, mi atardecer más bonito y la razón por la que creo en el amor verdadero.\n\nQuiero que sepas que te amo con todo mi corazón, con cada parte de mi ser, y que mi mayor deseo es construir un futuro a tu lado. No te dejaré, no soltaré tu mano y estaré contigo en las buenas y en las malas.\n\nSé que a veces la vida puede dudar, pero quiero que confíes en este amor, en lo que somos y en lo que podemos llegar a ser. Sueño con compartir cada amanecer, cada luna y cada atardecer contigo, con reír, crecer y apoyarnos siempre.\n\nQuiero que seas mi compañera de vida, mi presente y mi futuro. Quiero construir contigo un hogar lleno de sueños, de respeto, de alegría y de amor incondicional. No imagino mi vida sin ti, ni un solo día lejos de tu sonrisa y tu ternura.\n\nGracias por existir, por dejarme amarte y por enseñarme a confiar en el amor. Eres mi mayor fortuna y mi mayor ilusión. Te amo más de lo que puedo decir, y quiero que lo sepas hoy y siempre.`;
+    let twCartaIndex = 0;
+    function typewriterCarta() {
+      const tw = document.getElementById('typewriterCarta');
+      tw.textContent = '';
+      twCartaIndex = 0;
+      function step() {
+        if (twCartaIndex < textoCarta.length) {
+          tw.textContent += textoCarta[twCartaIndex] === '\\n' ? '\n' : textoCarta[twCartaIndex];
+          twCartaIndex++;
+          setTimeout(step, textoCarta[twCartaIndex-1] === '.' ? 80 : 28);
+        }
+      }
+      step();
     }
-  }
-  // Tulipanes en la parte inferior
-  function createTulips() {
-    const tulips = document.getElementById('tulips');
-    // SVGs de tulipanes de diferentes colores
-    const tulipSVGs = [
-      `<svg width="38" height="120" viewBox="0 0 38 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="17" y="40" width="4" height="70" rx="2" fill="#388e3c"/>
-        <ellipse cx="19" cy="48" rx="13" ry="18" fill="#f06292"/>
-        <ellipse cx="19" cy="44" rx="8" ry="10" fill="#fff" fill-opacity=".18"/>
-      </svg>`,
-      `<svg width="38" height="120" viewBox="0 0 38 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="17" y="40" width="4" height="70" rx="2" fill="#388e3c"/>
-        <ellipse cx="19" cy="48" rx="13" ry="18" fill="#ffd54f"/>
-        <ellipse cx="19" cy="44" rx="8" ry="10" fill="#fff" fill-opacity=".18"/>
-      </svg>`,
-      `<svg width="38" height="120" viewBox="0 0 38 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="17" y="40" width="4" height="70" rx="2" fill="#388e3c"/>
-        <ellipse cx="19" cy="48" rx="13" ry="18" fill="#ba68c8"/>
-        <ellipse cx="19" cy="44" rx="8" ry="10" fill="#fff" fill-opacity=".18"/>
-      </svg>`,
-      `<svg width="38" height="120" viewBox="0 0 38 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="17" y="40" width="4" height="70" rx="2" fill="#388e3c"/>
-        <ellipse cx="19" cy="48" rx="13" ry="18" fill="#e57373"/>
-        <ellipse cx="19" cy="44" rx="8" ry="10" fill="#fff" fill-opacity=".18"/>
-      </svg>`
-    ];
-    for (let i = 0; i < 8; i++) {
-      const tulip = document.createElement('div');
-      tulip.className = 'tulip';
-      tulip.innerHTML = tulipSVGs[i % tulipSVGs.length];
-      tulip.style.marginLeft = (i === 0 ? 0 : Math.random() * 16 + 8) + 'px';
-      tulips.appendChild(tulip);
-    }
-  }
-  createFloatingEmojis();
-  createTulips();
-</script>
+  </script>
 </body>
 </html>
