@@ -135,7 +135,9 @@
 </head>
 <body>
   <!-- Cambia el nombre del archivo si tu canción tiene otro nombre o extensión -->
+  <!-- Botón para reproducir la música de fondo -->
   <audio id="musicaAmor" src="Make You Mine (Put Your Hand in Mine) - Public (Sub. Esp  Lyrics).mp3" autoplay loop></audio>
+  <!-- El botón de música se elimina para que la reproducción sea completamente automática -->
   <canvas class="particles" id="particles"></canvas>
   <div class="magic-container">
     <div class="magic-card">
@@ -156,6 +158,15 @@
     </div>
   </div>
   <script>
+    // Música de fondo automática
+    const audio = document.getElementById('musicaAmor');
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        if (audio.paused) {
+          audio.play().catch(()=>{}); // Intenta reproducir automáticamente
+        }
+      }, 400);
+    });
     // Partículas de corazones y destellos
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
