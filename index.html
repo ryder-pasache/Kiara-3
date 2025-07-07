@@ -135,9 +135,10 @@
 </head>
 <body>
   <!-- Cambia el nombre del archivo si tu canción tiene otro nombre o extensión -->
-  <!-- Botón para reproducir la música de fondo -->
-  <audio id="musicaAmor" src="Make You Mine (Put Your Hand in Mine) - Public (Sub. Esp  Lyrics).mp3" autoplay loop></audio>
-  <!-- El botón de música se elimina para que la reproducción sea completamente automática -->
+  <audio id="musicaAmor" src="Make You Mine (Put Your Hand in Mine) - Public (Sub. Esp  Lyrics).mp3" loop></audio>
+  <button id="playMusicBtn" class="magic-btn play-music-btn" style="position:fixed;top:24px;right:24px;z-index:10;box-shadow:0 2px 12px 0 rgba(248,187,208,0.18);font-size:1.1rem;padding:14px 38px;display:none;gap:10px;align-items:center;" onclick="playMusic()">
+    <span style="font-size:1.5rem;">🎶</span> <span>Amor Presiona aqui 🥺</span>
+  </button>
   <canvas class="particles" id="particles"></canvas>
   <div class="magic-container">
     <div class="magic-card">
@@ -158,14 +159,28 @@
     </div>
   </div>
   <script>
-    // Música de fondo automática
+    // Botón para reproducir la música de fondo
+    const playBtn = document.getElementById('playMusicBtn');
     const audio = document.getElementById('musicaAmor');
+    let musicStarted = false;
+    function playMusic() {
+      audio.play();
+      playBtn.style.display = 'none';
+      musicStarted = true;
+    }
+    // Ocultar el botón si la música ya se reproduce automáticamente
+    audio.addEventListener('play', function() {
+      if (!musicStarted) playBtn.style.display = 'none';
+    });
+    // Mostrar el botón solo si el navegador bloquea el autoplay
     window.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
         if (audio.paused) {
-          audio.play().catch(()=>{}); // Intenta reproducir automáticamente
+          playBtn.style.display = 'flex';
+        } else {
+          playBtn.style.display = 'none';
         }
-      }, 400);
+      }, 600);
     });
     // Partículas de corazones y destellos
     const canvas = document.getElementById('particles');
